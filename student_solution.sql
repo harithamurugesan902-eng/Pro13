@@ -1,44 +1,43 @@
 CREATE DATABASE IF NOT EXISTS CollegeDB;
 USE CollegeDB;
 
--- Drop tables in reverse order of dependencies
 DROP TABLE IF EXISTS StudentCourse;
 DROP TABLE IF EXISTS Course;
 DROP TABLE IF EXISTS Faculty;
 DROP TABLE IF EXISTS Student;
 DROP TABLE IF EXISTS Department;
 
--- 1. Create Department table
+-- Create Department table
 CREATE TABLE Department (
     DepartmentID INT PRIMARY KEY,
-    DepartmentName VARCHAR(100) NOT NULL
+    DepartmentName VARCHAR(100)
 );
 
--- 2. Create Faculty table
+-- Create Faculty table
 CREATE TABLE Faculty (
     FacultyID INT PRIMARY KEY,
-    FacultyName VARCHAR(100) NOT NULL,
+    FacultyName VARCHAR(100),
     DepartmentID INT,
     FOREIGN KEY (DepartmentID)
         REFERENCES Department(DepartmentID)
 );
 
--- 3. Create Student table
+-- Create Student table
 CREATE TABLE Student (
     StudentID INT PRIMARY KEY,
-    StudentName VARCHAR(100) NOT NULL
+    StudentName VARCHAR(100)
 );
 
--- 4. Create Course table
+-- Create Course table
 CREATE TABLE Course (
     CourseID INT PRIMARY KEY,
-    CourseName VARCHAR(100) NOT NULL,
+    CourseName VARCHAR(100),
     FacultyID INT,
     FOREIGN KEY (FacultyID)
         REFERENCES Faculty(FacultyID)
 );
 
--- 5. Create StudentCourse table
+-- Create StudentCourse table
 CREATE TABLE StudentCourse (
     StudentID INT,
     CourseID INT,
@@ -49,36 +48,34 @@ CREATE TABLE StudentCourse (
         REFERENCES Course(CourseID)
 );
 
--- Insert Department records
+-- Insert 2 Department records
 INSERT INTO Department VALUES
 (10, 'Computer Science'),
-(20, 'Mathematics'),
-(30, 'Physics');
+(20, 'Mathematics');
 
--- Insert Faculty records
+-- Insert 2 Faculty records
 INSERT INTO Faculty VALUES
 (101, 'Ravi', 10),
-(102, 'Priya', 20),
-(103, 'Kumar', 30);
+(102, 'Priya', 20);
 
--- Insert Student records
+-- Insert 3 Student records
 INSERT INTO Student VALUES
 (1001, 'Arun'),
 (1002, 'Priya'),
 (1003, 'Kumar');
 
--- Insert Course records
+-- Insert 3 Course records
 INSERT INTO Course VALUES
 (201, 'Database Systems', 101),
-(202, 'Mathematics', 102),
-(203, 'Physics', 103);
+(202, 'Data Structures', 101),
+(203, 'Mathematics', 102);
 
--- Insert StudentCourse records
+-- Insert 4 StudentCourse records
 INSERT INTO StudentCourse VALUES
 (1001, 201),
 (1001, 202),
-(1002, 202),
-(1003, 203);
+(1002, 203),
+(1003, 201);
 
 -- Display normalized data using JOIN
 SELECT
